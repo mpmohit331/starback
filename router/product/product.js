@@ -145,9 +145,11 @@ router.use('/categoryDisplaySeed', (req, res, next)=>{
 router.use('/seasonalOrder', (req, res, next)=>{
     let db = getDb();
     const date = new Date();
+   
     const dateArray = date.toLocaleDateString().split("/")
     let season = '';
-    if(parseInt(dateArray[1]) >= 1 && parseInt(dateArray[1]) <= 3){
+    if(parseInt(dateArray[1]) >= 1 && parseInt(dateArray[1]) <= 3)
+    {
         season = 'Summer'
     }else if(parseInt(dateArray[1]) === 4){
         if(parseInt(dateArray[0]) <= 15){
@@ -155,20 +157,30 @@ router.use('/seasonalOrder', (req, res, next)=>{
         }else{
             season = 'Kharif';    
         }
-    }else if(parseInt(dateArray[1]) >= 5 && parseInt(dateArray[1]) <= 7 ){
+    }
+    else if(parseInt(dateArray[1]) >= 5 && parseInt(dateArray[1]) <= 7 )
+    {
+
         season = "Kharif"
-    }else if(parseInt(dateArray[0]) === 8){
-        if(parseInt(dateArray[0]) <= 15){
+    }
+    else if(parseInt(dateArray[0]) === 8)
+    {
+        if(parseInt(dateArray[0]) <= 15)
+        {
             season = 'Kharif'
-        }else{
+        }
+        else
+        {
             season = 'Rabi'    
         }
     }else if(parseInt(dateArray[0]) >= 9){
         season = "Rabi"
     }
     
-
-    db.collection('seeds').find({season: season}).toArray().then((response)=>{
+    console.log(season)
+    db.collection('seeds').find().toArray().then((response)=>{
+        
+        console.log("Mtbtech"+response)
         res.send(response)
     })
 
