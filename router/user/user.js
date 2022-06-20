@@ -97,6 +97,7 @@ router.use('/userAuthenticated', (req, res, next) => {
     // const cookie = req.cookies['jwt'];
     // const cookie2 = req.cookies;
     const cookie = req.headers.jwt;
+    console.log(cookie)
     let db = getDb();
     if(cookie && cookie !== 'undefined'){
         const myId = new ObjectId(cookie);
@@ -111,6 +112,19 @@ router.use('/userAuthenticated', (req, res, next) => {
         res.send({status: 'not logged in'})
     }
    
+})
+
+router.use('/passwordUpdate', (req, res, next)=>{
+    console.log("Password Update")
+    const {newpass, updatepass, number} = req.body;
+    console.log(number)
+    console.log(req.body)
+    let db = getDb();
+    db.collection('users').updateOne({number: number}, {$set: {
+        password: newpass
+    }}).then((response)=>{
+        res.send(response)
+    })
 })
 
 router.use('/addUserAddress', (req, res, next) => {
